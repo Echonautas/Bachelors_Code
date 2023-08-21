@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+  <style>
+    .logout-btn {
+      position: absolute;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      
+      top:50px;
+      right: 10px;
+    }
+
+    p {
+      position: absolute;
+      right: 10px;
+      top:10px;
+
+    }
+  </style>
+  <title>Main Page</title>
+</head>
+<body>
+  <h1>Main Page</h1>
+  <p>Welcome, {{ username }}!</p>
+  <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+  <ul>
+    <h1>User Managment</h1>
+    <li><a href="{{ url_for('add_user') }}">Add New User</a></li>
+    <li><a href="{{ url_for('upload_file') }}">Upload Image</a></li>
+    <li><a href="{{ url_for('delete_directory') }}">Delete User</a></li>
+    <!-- Add links to other pages of your Flask app here -->
+  </ul>
+
+  <ul>
+    <li><a href="{{ url_for('gallery') }}">Image Gallery</a></li>
+    <li><a href="{{ url_for('user_database') }}">All Users Access List</a></li>
+  </ul>
+
+  <ul>
+    <h1>Lock Managment</h1>
+    <li><a href="{{ url_for('creation') }}">Add Lock</a></li>
+    <li><a href="{{ url_for('run_command') }}">Add User To Lock</a></li>
+  </ul>
+  <ul>
+    <li><a href="{{ url_for('database') }}">Lock List</a></li>
+  </ul>
+   
+  
+</body>
+</html>

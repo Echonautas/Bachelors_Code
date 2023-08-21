@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Delete Directory</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='delete.css') }}">
+  </head>
+  <body>
+    <h1>Delete Directory</h1>
+
+    <form action="{{ url_for('delete_directory') }}" method="post">
+      <label for="directory_name">Select directory to delete:</label>
+      <select id="directory_name" name="directory_name" onchange="updateTable()">
+        {% for directory in directories %}
+        <option value="{{ directory }}">{{ directory }}</option>
+        {% endfor %}
+      </select>
+      
+    </form>
+      <table id="checking_table">
+        <tr>
+          <th>Lock_IP</th>
+        </tr>
+      </table>
+    <ul>
+      <li><a href="{{ url_for('index') }}">Back</a></li>
+      <!-- Add links to other pages of your Flask app here -->
+    </ul>
+
+    <script>
+      var dropdown = document.getElementById("directory_name");
+dropdown.addEventListener("change", function() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      var checking = JSON.parse(this.responseText);
+      var table = document.getElementById("checking_table");
+      table.innerHTML = "<tr><th>ID</th>";
+      for (var i = 0; i < checking.length; i++) {
+        var row = "<tr><td>" + checking[i][0] + "</td><td><button onclick=\"deleteRecord('" + checking[i][0] + "', '" + dropdown.value + "')\">Delete</button></td></tr>";
+        table.innerHTML += row;
+      }
+    }
+  };
+  xhr.open("GET", "/get_checking?directory_name=" + dropdown.value);
+  xhr.send();
+});
+
+function deleteRecord(lockIp) {
+    var directory_name = document.getElementById("directory_name").value;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // Reload the table to display the updated records
+            var dropdown = document.getElementById("directory_name");
+            dropdown.dispatchEvent(new Event('change'));
+        }
+    };
+    xhr.open("POST", "/delete_checking");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({"lock_ip": lockIp, "directory_name": directory_name}));
+}
+
+
+      </script>
+      
+    <!-- <form>
+    <button type="submit">Delete</button>
+  </form> -->
+  </body>
+</html>
