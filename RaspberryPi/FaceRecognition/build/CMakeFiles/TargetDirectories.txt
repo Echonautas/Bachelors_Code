@@ -1,0 +1,3 @@
+/home/pi/software/Face-Recognition/build/CMakeFiles/rebuild_cache.dir
+/home/pi/software/Face-Recognition/build/CMakeFiles/FaceRecognition.dir
+/home/pi/software/Face-Recognition/build/CMakeFiles/edit_cache.dir
